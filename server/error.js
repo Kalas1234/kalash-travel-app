@@ -3,4 +3,10 @@ const createError = (status, message) => {
 
     error.status = status;
     error.message = message;
+
+    return error;
 };
+
+module.exports = {
+    createError
+}

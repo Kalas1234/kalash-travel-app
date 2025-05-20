@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import userRoute from './routes/user.js';
 
 const app = express();
 const PORT = process.env.PORT;
@@ -19,7 +20,6 @@ const connect = async () => {
         throw error;
     }
 };
-
 mongoose.connection.on('disconnected', () => {
     console.log('mongoDB disconnected!');
 });
@@ -27,9 +27,10 @@ mongoose.connection.on('disconnected', () => {
 app.get('/', (req, res) => {
     res.send('Hello from Travel app');
 });
+app.use(express.json());
+app.use('/api/users', userRoute);
 
 app.use(cookieParser());
-app.use(express.json());
 app.use(helmet());
 app.use(
     cors({
@@ -39,7 +40,7 @@ app.use(
 );
 
 app.use(morgan('common'));
-app.listen(PORT, () => {
-    console.log('Listening on port 5500');
+app.listen(5000, () => {console.log("Server running on port 5000")
     connect();
 });
+
